@@ -10,7 +10,6 @@ Doing:
   + Increase size of GUI -> merge to master
 
 Done:
-  -
 
 Optional:
   - Further tweak GUI
