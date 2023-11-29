@@ -110,5 +110,6 @@ class HangmanGameGUI:
 
 if __name__ == "__main__":
     root = tk.Tk()
+    root.geometry("500x400")  # Set the window dimensions
     hangman_game = HangmanGameGUI(root)
     root.mainloop()
