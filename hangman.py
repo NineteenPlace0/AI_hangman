@@ -22,10 +22,6 @@ def show_message(title, message):
     messagebox.showinfo(title, message)
 
 
-def is_valid_guess(guess):
-    return len(guess) == 1 and guess.isalpha()
-
-
 class HangmanGameGUI:
     def __init__(self, root):
         self.root = root
@@ -52,10 +48,10 @@ class HangmanGameGUI:
         self.attempts_label.pack()
 
         # Instruction
-        self.guess_label = tk.Label(self.root, text="Guess a letter:", font=("Helvetica", 12))
+        self.guess_label = tk.Label(self.root, text="Guess a letter or the entire word:", font=("Helvetica", 12))
         self.guess_label.pack()
 
-        # Guess letter -- input
+        # Input -- guess letter or word
         self.guess_entry = tk.Entry(self.root, font=("Helvetica", 12))
         self.guess_entry.pack()
 
@@ -70,15 +66,30 @@ class HangmanGameGUI:
     def display_word(self):
         return ' '.join([letter if letter in self.good_guess else '_' for letter in self.word_to_guess])
 
-    def make_guess(self, event=None):
+    def make_guess(self):
         """Check to see if guess was correct, incorrect, or invalid (Error)."""
         guess = self.guess_entry.get().lower()
 
         # Invalid guess
-        if not is_valid_guess(guess):
-            messagebox.showinfo("Invalid Input", "Please enter a single letter.")
+        if not self.is_valid_input(guess):
+
+            messagebox.showinfo("Invalid Input", "Please enter a single letter or the entire word.")
+            # Clear entry after invalid guess -- NEEDED FOR CLEARING AFTER INVALID ENTRY
+            self.guess_entry.delete(0, 'end')
             return
 
+        # Guess letter
+        if len(guess) == 1:
+            self.process_letter_guess(guess)
+        # Guess word
+        else:
+            self.process_word_guess(guess)
+
+        # Clear the entry after processing the guess
+        self.guess_entry.delete(0, 'end')
+
+    # Process LETTER
+    def process_letter_guess(self, guess):
         # Already guessed
         if self.already_guessed(guess):
             messagebox.showinfo("Duplicate Guess", "You've already guessed that letter. Try again.")
@@ -98,6 +109,30 @@ class HangmanGameGUI:
         current_display = self.display_word()
         self.word_label.config(text=current_display)
 
+        self.check_game_result()
+
+    # Process WORD
+    def process_word_guess(self, guess):
+        # Game won
+        if guess == self.word_to_guess:
+            show_message("Congratulations", f"You guessed the word: {self.word_to_guess}")
+            self.root.destroy()
+        # Game lost
+        else:
+            self.attempts -= 1
+            self.incorrect_label.config(text=f"Incorrect Guesses: {', '.join(self.bad_guess)}")
+            self.attempts_label.config(text=f"Attempts left: {self.attempts}")
+            self.check_game_result()
+
+    def is_valid_input(self, guess):
+        """Check to see if input (Guess) is a valid guess."""
+        return len(guess) == 1 and guess.isalpha() or len(guess) == len(self.word_to_guess) and guess.isalpha()
+
+    # Guessed letters
+    def already_guessed(self, guess):
+        return guess in self.good_guess or guess in self.bad_guess
+
+    def check_game_result(self):
         # Game won
         if set(self.good_guess) == set(self.word_to_guess):
             show_message("Congratulations", f"You guessed the word: {self.word_to_guess}")
@@ -107,12 +142,6 @@ class HangmanGameGUI:
         if self.attempts == 0:
             show_message("Game Over", f"Sorry, you ran out of attempts. The word was: {self.word_to_guess}")
             self.root.destroy()
-
-        # Clear the entry after processing the guess
-        self.guess_entry.delete(0, 'end')
-
-    def already_guessed(self, guess):
-        return guess in self.good_guess or guess in self.bad_guess
 
 
 if __name__ == "__main__":
