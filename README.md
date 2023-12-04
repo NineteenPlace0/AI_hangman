@@ -2,6 +2,7 @@
 A game of hangman, generated py ChatGPT, with minor tweaks by human hand.
 
 Done:
+  + Integrate tKinter
   + Increase size of GUI
 
 Ready to merge:
