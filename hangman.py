@@ -2,7 +2,6 @@
 Minor edits made by human hand.
 """
 
-import requests
 import random
 import tkinter as tk
 from tkinter import messagebox
@@ -10,11 +9,11 @@ from tkinter import messagebox
 
 def choose_word():
     try:
-        response = requests.get("https://www.randomwordgenerator.com/json/words.json")
-        words = response.json()['data']
-        return random.choice(words)['word'].lower()
+        with open("words.txt", "r") as file:
+            words = file.read().splitlines()
+        return random.choice(words).lower()
     except Exception as e:
-        print(f"Error fetching words: {e}")
+        print(f"Error reading words from file: {e}")
         return random.choice(["python", "hangman", "programming", "computer", "game", "code"])
 
 
