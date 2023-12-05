@@ -5,12 +5,13 @@ Minor edits made by human hand.
 import random
 import tkinter as tk
 from tkinter import messagebox
+import json
 
 
 def choose_word():
     try:
-        with open("words.txt", "r") as file:
-            words = file.read().splitlines()
+        with open("words.json", "r") as file:
+            words = json.load(file)['words']
         return random.choice(words).lower()
     except Exception as e:
         print(f"Error reading words from file: {e}")
