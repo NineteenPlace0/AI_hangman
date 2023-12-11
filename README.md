@@ -1,4 +1,4 @@
-# AI_hangman - dictionary
+# AI_hangman - replay
 A game of hangman, generated py ChatGPT, with minor tweaks by human hand.
 
-This branch will use a local '.json' file to find words to guess.
+This branch will give players the option to replay the game once it ends.
