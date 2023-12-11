@@ -16,3 +16,5 @@ To Do:
       - Further tweak GUI
       - Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit;
         + possibly buttons, maybe keypresses (y/n)
+      - Show the word definition when the game ends
+        + (link to online dictionary?)
