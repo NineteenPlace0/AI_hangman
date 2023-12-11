@@ -12,7 +12,7 @@ Ready to merge:
   + Remove online dependency for full functionality (https://randomwordgenerator.com/json/words.json) --- (DICTIONARY)
 
 To Do:
-  Optional:
-    - Further tweak GUI
-    - Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit;
-      + possibly buttons, maybe keypresses (y/n)
+  + Optional:
+      - Further tweak GUI
+      - Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit;
+        + possibly buttons, maybe keypresses (y/n)
