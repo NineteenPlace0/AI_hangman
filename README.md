@@ -1,4 +1,18 @@
-# AI_hangman - guess word
+# AI_hangman
 A game of hangman, generated py ChatGPT, with minor tweaks by human hand.
 
-This branch will allow players to guess the entire word in a single attempt, as long as the length (in letters) of the guess matches that of the word to be guessed.
+Done:
+  + Integrate tKinter
+  + Increase size of GUI --- (GUI)
+  + Allow 'Enter'-key to submit guess (bypass clicking button) --- (KEYPRESS)
+  + Allow player to guess the entire word --- (GUESS-WORD)
+
+Ready to merge:
+  + Remove online dependency for full functionality (https://randomwordgenerator.com/json/words.json) --- (DICTIONARY)
+  + Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit. --- (REPLAY)
+
+To Do:
+  + Optional:
+      - Further tweak GUI --- (GUI-TWEAK)
+      - Show the word definition when the game ends; --- (DEFINITION)
+        + (link to online dictionary?)
