@@ -6,9 +6,9 @@ Done:
   + Increase size of GUI --- (GUI)
   + Allow 'Enter'-key to submit guess (bypass clicking button) --- (KEYPRESS)
   + Allow player to guess the entire word --- (GUESS-WORD)
+  + Remove online dependency for full functionality --- (DICTIONARY)
 
 Ready to merge:
-  + Remove online dependency for full functionality (https://randomwordgenerator.com/json/words.json) --- (DICTIONARY)
   + Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit. --- (REPLAY)
 
 To Do:

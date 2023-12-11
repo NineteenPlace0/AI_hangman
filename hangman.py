@@ -2,20 +2,24 @@
 Minor edits made by human hand.
 """
 
-import requests
 import random
 import tkinter as tk
 from tkinter import messagebox
+import json
 
 
 def choose_word():
+    """Picks a word from 'words.json' at random."""
     try:
-        response = requests.get("https://www.randomwordgenerator.com/json/words.json")
-        words = response.json()['data']
-        return random.choice(words)['word'].lower()
+        with open("words.json", "r") as file:
+            data = json.load(file)
+            words = [item["word"] for item in data["data"]]
+
+            # Randomly pick a word
+            return random.choice(words).lower()
+
     except Exception as e:
-        print(f"Error fetching words: {e}")
-        return random.choice(["python", "hangman", "programming", "computer", "game", "code"])
+        print(f"Error reading words from file: {e}")
 
 
 def show_message(title, message):
