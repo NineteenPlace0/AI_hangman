@@ -63,10 +63,14 @@ class HangmanGameGUI:
         self.guess_button = tk.Button(self.root, text="Guess", command=self.make_guess, font=("Helvetica", 12))
         self.guess_button.pack(pady=10)
 
+        # Bind the Enter key to the make_guess function
+        """Pressing the 'ENTER-key' submits the input ('Guess')."""
+        self.root.bind('<Return>', lambda event=None: self.make_guess())
+
     def display_word(self):
         return ' '.join([letter if letter in self.good_guess else '_' for letter in self.word_to_guess])
 
-    def make_guess(self):
+    def make_guess(self, event=None):
         """Check to see if guess was correct, incorrect, or invalid (Error)."""
         guess = self.guess_entry.get().lower()
 
@@ -103,6 +107,9 @@ class HangmanGameGUI:
         if self.attempts == 0:
             show_message("Game Over", f"Sorry, you ran out of attempts. The word was: {self.word_to_guess}")
             self.root.destroy()
+
+        # Clear the entry after processing the guess
+        self.guess_entry.delete(0, 'end')
 
     def already_guessed(self, guess):
         return guess in self.good_guess or guess in self.bad_guess
