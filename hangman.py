@@ -72,6 +72,14 @@ class HangmanGameGUI:
 
         self.update_labels()
 
+    def replay_game(self):
+        replay = messagebox.askyesno("Replay", "Do you want to play again?")
+        if replay:
+            self.incorrect_label.config(text="Incorrect Guesses: ")
+            self.play_game()
+        else:
+            self.root.destroy()
+
     def display_word(self):
         return ' '.join([letter if letter in self.good_guess else '_' for letter in self.word_to_guess])
 
@@ -121,12 +129,7 @@ class HangmanGameGUI:
         # Game won
         if guess == self.word_to_guess:
             show_message("Congratulations", f"You guessed the word: {self.word_to_guess}")
-            replay = messagebox.askyesno("Replay", "Do you want to play again?")
-            if replay:
-                self.play_game()
-            else:
-                self.root.destroy()
-        # Guessed -> Incorrect
+            self.replay_game()
         else:
             self.attempts -= 1
             self.update_labels()
@@ -144,20 +147,12 @@ class HangmanGameGUI:
         # Game won
         if set(self.good_guess) == set(self.word_to_guess):
             show_message("Congratulations", f"You guessed the word: {self.word_to_guess}")
-            replay = messagebox.askyesno("Replay", "Do you want to play again?")
-            if replay:
-                self.play_game()
-            else:
-                self.root.destroy()
+            self.replay_game()
 
         # Game lost
         if self.attempts == 0:
             show_message("Game Over", f"Sorry, you ran out of attempts. The word was: {self.word_to_guess}")
-            replay = messagebox.askyesno("Replay", "Do you want to play again?")
-            if replay:
-                self.play_game()
-            else:
-                self.root.destroy()
+            self.replay_game()
 
     def update_labels(self):
         current_display = self.display_word()
