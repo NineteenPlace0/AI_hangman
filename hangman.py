@@ -19,7 +19,8 @@ def choose_word():
             return random.choice(words).lower()
 
     except Exception as e:
-        print(f"Error reading words from file: {e}")
+        print(f"Error reading words from JSON file: {e}")
+        return random.choice(["python", "hangman", "programming", "computer", "game", "code"])
 
 
 def show_message(title, message):
@@ -31,16 +32,12 @@ class HangmanGameGUI:
         self.root = root
         self.root.title("Hangman Game")
 
-        self.word_to_guess = choose_word()
-        self.good_guess = []
-        self.bad_guess = []
-        self.attempts = 10
-
         self.create_widgets()
+        self.play_game()
 
     def create_widgets(self):
         # Word to guess
-        self.word_label = tk.Label(self.root, text=self.display_word(), font=("Helvetica", 18))
+        self.word_label = tk.Label(self.root, text="", font=("Helvetica", 18))
         self.word_label.pack(pady=10)
 
         # Incorrect guess
@@ -48,7 +45,7 @@ class HangmanGameGUI:
         self.incorrect_label.pack()
 
         # Attempts remaining
-        self.attempts_label = tk.Label(self.root, text=f"Attempts left: {self.attempts}", font=("Helvetica", 12))
+        self.attempts_label = tk.Label(self.root, text="", font=("Helvetica", 12))
         self.attempts_label.pack()
 
         # Instruction
@@ -66,6 +63,14 @@ class HangmanGameGUI:
         # Bind the Enter key to the make_guess function
         """Pressing the 'ENTER-key' submits the input ('Guess')."""
         self.root.bind('<Return>', lambda event=None: self.make_guess())
+
+    def play_game(self):
+        self.word_to_guess = choose_word()
+        self.good_guess = []
+        self.bad_guess = []
+        self.attempts = 10
+
+        self.update_labels()
 
     def display_word(self):
         return ' '.join([letter if letter in self.good_guess else '_' for letter in self.word_to_guess])
@@ -108,11 +113,7 @@ class HangmanGameGUI:
             self.bad_guess.append(guess)
             self.incorrect_label.config(text=f"Incorrect Guesses: {', '.join(self.bad_guess)}")
 
-        self.attempts_label.config(text=f"Attempts left: {self.attempts}")
-
-        current_display = self.display_word()
-        self.word_label.config(text=current_display)
-
+        self.update_labels()
         self.check_game_result()
 
     # Process WORD
@@ -120,12 +121,15 @@ class HangmanGameGUI:
         # Game won
         if guess == self.word_to_guess:
             show_message("Congratulations", f"You guessed the word: {self.word_to_guess}")
-            self.root.destroy()
-        # Game lost
+            replay = messagebox.askyesno("Replay", "Do you want to play again?")
+            if replay:
+                self.play_game()
+            else:
+                self.root.destroy()
+        # Guessed -> Incorrect
         else:
             self.attempts -= 1
-            self.incorrect_label.config(text=f"Incorrect Guesses: {', '.join(self.bad_guess)}")
-            self.attempts_label.config(text=f"Attempts left: {self.attempts}")
+            self.update_labels()
             self.check_game_result()
 
     def is_valid_input(self, guess):
@@ -140,12 +144,25 @@ class HangmanGameGUI:
         # Game won
         if set(self.good_guess) == set(self.word_to_guess):
             show_message("Congratulations", f"You guessed the word: {self.word_to_guess}")
-            self.root.destroy()
+            replay = messagebox.askyesno("Replay", "Do you want to play again?")
+            if replay:
+                self.play_game()
+            else:
+                self.root.destroy()
 
         # Game lost
         if self.attempts == 0:
             show_message("Game Over", f"Sorry, you ran out of attempts. The word was: {self.word_to_guess}")
-            self.root.destroy()
+            replay = messagebox.askyesno("Replay", "Do you want to play again?")
+            if replay:
+                self.play_game()
+            else:
+                self.root.destroy()
+
+    def update_labels(self):
+        current_display = self.display_word()
+        self.word_label.config(text=current_display)
+        self.attempts_label.config(text=f"Attempts left: {self.attempts}")
 
 
 if __name__ == "__main__":
