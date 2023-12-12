@@ -1,5 +1,5 @@
 # AI_hangman
-A game of hangman, generated py ChatGPT, with minor tweaks by human hand.
+A game of hangman, made with assistance from ChatGPT.
 
 Done:
   + Integrate tKinter
@@ -7,9 +7,9 @@ Done:
   + Allow 'Enter'-key to submit guess (bypass clicking button) --- (KEYPRESS)
   + Allow player to guess the entire word --- (GUESS-WORD)
   + Remove online dependency for full functionality --- (DICTIONARY)
+  + Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit. --- (REPLAY)
 
 Ready to merge:
-  + Replay option -> On game end, ask player to play again, 'yes' to continue, 'no' to quit. --- (REPLAY)
 
 To Do:
   + Optional:
