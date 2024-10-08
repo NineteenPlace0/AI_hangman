@@ -16,7 +16,7 @@ The user/player is asked for an input;
 Once the game has ended (in either a win or a loss) the player is asked if they want to play again.
   - if the player chooses "yes": the program randomly chooses a new 'WORD' and the game begins again.
   - if the player chooses "no": the program closes*
-      * NOTE: the program actually crashes *
+    *NOTE: the program actually crashes
 
 
 
